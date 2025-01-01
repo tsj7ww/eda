@@ -1,2 +1,2 @@
-# eda
-Exploratory data analysis
+# Exploratory Data Analysis
+EDA development environment
