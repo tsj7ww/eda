@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project 1 - Time Series Analysis</title>
+    
+    <!-- Load visualization libraries -->
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    
+    <!-- Custom styles -->
+    <link rel="stylesheet" href="public/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Time Series Dashboard</h1>
+        
+        <div class="chart-grid">
+            <!-- D3.js Chart -->
+            <div class="chart-container">
+                <h2>D3 Visualization</h2>
+                <div id="d3-chart"></div>
+            </div>
+
+            <!-- ECharts Chart -->
+            <div class="chart-container">
+                <h2>ECharts Visualization</h2>
+                <div id="echarts-chart"></div>
+            </div>
+
+            <!-- Plotly Chart -->
+            <div class="chart-container">
+                <h2>Plotly Visualization</h2>
+                <div id="plotly-chart"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Custom JavaScript -->
+    <script src="charts/d3.js"></script>
+    <script src="charts/echarts.js"></script>
+    <script src="charts/plotly.js"></script>
+    <script src="public/scripts.js"></script>
+</body>
+</html>
