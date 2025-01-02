@@ -6,9 +6,10 @@ RAW_DIR="$DATA_DIR/raw"
 PROCESSED_DIR="$DATA_DIR/processed"
 
 # Kaggle creds
-if [ ! -f /root/.kaggle/kaggle.json ]; then
-    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > /root/.kaggle/kaggle.json
-    chmod 600 /root/.kaggle/kaggle.json
+if [ ! -f ~/.kaggle/kaggle.json ]; then
+    # mkdir ~/.kaggle
+    echo "{\"username\":\"$KAGGLE_USERNAME\",\"key\":\"$KAGGLE_KEY\"}" > ~/.kaggle/kaggle.json
+    chmod 600 ~/.kaggle/kaggle.json
 fi
 
 # Check if data directory exists

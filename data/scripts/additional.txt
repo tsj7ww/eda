@@ -1,0 +1,6 @@
+538 - https://data.fivethirtyeight.com/
+Data.gov - https://data.gov/
+Small Area Income and Poverty Estimates (SAIPE) Program - https://www.census.gov/programs-surveys/saipe.html
+BLS Unemployment - https://www.bls.gov/data/#unemployment
+SanFran data - https://datasf.org/opendata/
+NYC data - https://opendata.cityofnewyork.us/
