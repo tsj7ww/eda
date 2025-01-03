@@ -1,0 +1,20 @@
+table {
+    border-collapse: collapse;
+    margin: 20px 0;
+    width: 100%;
+}
+
+th, td {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+th {
+    background-color: #f4f4f4;
+}
+
+.disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

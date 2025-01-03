@@ -9,21 +9,30 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(express.json());
 
-// Root route - redirect to project1 by default
+// Root route - redirect to init by default
 app.get('/', (req, res) => {
     res.redirect('/init');
 });
-
-// Serve static files for project1
-app.use('/init', express.static(path.join(__dirname, 'init')));
-
-// Serve static files for project2
-app.use('/project2', express.static(path.join(__dirname, 'project2')));
 
 // Health check endpoint
 app.get('/health', (req, res) => {
     res.json({ status: 'healthy' });
 });
+
+// Create endpoint to access data files
+app.get('/data/processed/:filename', (req, res) => {
+    const filename = req.params.filename;
+    res.sendFile(`/data/processed/${filename}`);
+});
+
+// Static files
+app.use('/edu/public', express.static(path.join(__dirname, 'edu/public')));
+app.use('/edu/charts', express.static(path.join(__dirname, 'edu/charts')));
+app.use('/js', express.static(path.join(__dirname, 'node_modules/plotly.js-dist')));
+
+// Project routes
+app.use('/init', express.static(path.join(__dirname, 'init')));
+app.use('/edu', express.static(path.join(__dirname, 'edu')));
 
 // Start server
 app.listen(port, '0.0.0.0', () => {

@@ -20,6 +20,10 @@ data/*
 .vscode/
 .idea/
 
+# Misc
+.DS_Store
+.Trash-*
+
 
 
 

@@ -20,4 +20,5 @@ COPY webserver .
 EXPOSE 3000
 
 # Start the server
-CMD ["node", "server.js"]
+CMD ["npm", "run", "dev"]
+# CMD ["node", "server.js"]
