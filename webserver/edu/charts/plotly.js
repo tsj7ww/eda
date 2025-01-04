@@ -52,5 +52,16 @@ function createPlot(data) {
         }
     };
 
-    Plotly.newPlot('myPlot', traces, layout);
+    // Add error handling for plot creation
+    try {
+        Plotly.newPlot('myPlot', traces, layout).catch(error => {
+            console.error('Error creating plot:', error);
+            document.getElementById('myPlot').innerHTML = 
+                `<p style="color: red;">Error creating plot: ${error.message}</p>`;
+        });
+    } catch (error) {
+        console.error('Error creating plot:', error);
+        document.getElementById('myPlot').innerHTML = 
+            `<p style="color: red;">Error creating plot: ${error.message}</p>`;
+    }
 }

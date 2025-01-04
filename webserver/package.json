@@ -13,7 +13,8 @@
     "helmet": "7.0.0",
     "d3": "7.8.5",
     "echarts": "5.4.3",
-    "plotly.js-dist": "2.26.0"
+    "plotly.js-dist": "2.26.0",
+    "papaparse": "5.4.1"
   },
   "devDependencies": {
     "nodemon": "3.0.1",

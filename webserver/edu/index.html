@@ -1,18 +1,27 @@
+<!DOCTYPE html>
 <html>
 <head>
     <title>Education Data Visualization</title>
     <link rel="stylesheet" href="/edu/public/style.css">
     <script src="/js/plotly.js"></script>
+    <script src="/js/papaparse.js"></script>
 </head>
 <body>
-    <div id="myPlot"></div>
-    <div id="tableContainer"></div>
+    <div class="visualization-container">
+        <div id="myPlot"></div>
+        <div id="tableContainer"></div>
+    </div>
     
     <!-- Local scripts -->
-    <script src="/edu/public/scripts.js"></script>
+    <script src="/edu/charts/table.js"></script>
     <script src="/edu/charts/plotly.js"></script>
+    <script src="/edu/public/scripts.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', loadData);
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
     </script>
 </body>
 </html>
