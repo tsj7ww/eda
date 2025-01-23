@@ -15,14 +15,14 @@ services:
     env_file:
       - .env
 
-  viz:
+  web:
     build:
       context: .
-      dockerfile: docker/viz/Dockerfile
-      # context: ./docker/viz
+      dockerfile: docker/web/Dockerfile
+      # context: ./docker/web
       # dockerfile: Dockerfile
-    container_name: eda-viz
-    image: eda-viz
+    container_name: eda-web
+    image: eda-web
     ports:
       - "3000:3000"
     volumes:
