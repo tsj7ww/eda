@@ -9,13 +9,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     && rm -rf /var/lib/apt/lists/*
 
 # Copy package files first for better caching
-COPY webserver/package*.json ./
+COPY workspace/web/package*.json ./
 
 # Install dependencies
 RUN npm install
 
 # Copy application code
-COPY webserver .
+COPY workspace/web .
 
 EXPOSE 3000
 
