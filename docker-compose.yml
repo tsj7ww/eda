@@ -1,10 +1,10 @@
 services:
-  jupyter:
+  python:
     build:
-      context: ./docker/jupyter
+      context: ./docker/python
       dockerfile: Dockerfile
-    container_name: eda-jupyter
-    image: eda-jupyter
+    container_name: eda-python
+    image: eda-python
     ports:
       - "8888:8888"
     volumes:
@@ -15,24 +15,59 @@ services:
     env_file:
       - .env
 
-  web:
-    build:
-      context: .
-      dockerfile: docker/web/Dockerfile
-      # context: ./docker/web
-      # dockerfile: Dockerfile
-    container_name: eda-web
-    image: eda-web
-    ports:
-      - "3000:3000"
-    volumes:
-      - ./webserver:/app
-      - /app/node_modules
-      - ./data:/data
-    networks:
-      - data_network
-    env_file:
-      - .env
+  # julia:
+  #   build:
+  #     context: ./docker/julia
+  #     dockerfile: Dockerfile
+  #   container_name: eda-julia
+  #   image: eda-julia
+  #   ports:
+  #     - "8888:8888"
+  #   volumes:
+  #     - ./workspace:/workspace
+  #     - ./data:/data
+  #     - julia-packages:/home/jupyter/.julia
+  #   environment:
+  #     - JULIA_NUM_THREADS=auto
+  #   networks:
+  #     - data_network
+  #   env_file:
+  #     - .env
+
+  # r:
+  #   build:
+  #     context: ./docker/r
+  #     dockerfile: Dockerfile
+  #   container_name: eda-r
+  #   image: eda-r
+  #   ports:
+  #     - "8787:8787"
+  #   volumes:
+  #     - ./workspace:/workspace
+  #     - ./data:/data
+  #   networks:
+  #     - data_network
+  #   env_file:
+  #     - .env
+  
+  # web:
+  #   build:
+  #     context: .
+  #     dockerfile: docker/web/Dockerfile
+  #     # context: ./docker/web
+  #     # dockerfile: Dockerfile
+  #   container_name: eda-web
+  #   image: eda-web
+  #   ports:
+  #     - "3000:3000"
+  #   volumes:
+  #     - ./webserver:/app
+  #     - /app/node_modules
+  #     - ./data:/data
+  #   networks:
+  #     - data_network
+  #   env_file:
+  #     - .env
       
   # mlflow:
   #   image: ghcr.io/mlflow/mlflow:v2.3.1
@@ -81,28 +116,6 @@ services:
   #   networks:
   #     - data-network
 
-  # # monitoring
-  # prometheus:
-  #   image: prom/prometheus
-  #   ports:
-  #     - "9090:9090"
-  # grafana:
-  #   image: grafana/grafana
-  #   ports:
-  #     - "3001:3000"
-  
-  # # dev tools
-  # code-server:
-  #   image: codercom/code-server
-  #   ports:
-  #     - "8080:8080"
-  
-  # # documentation
-  # jupyterbook:
-  #   build: ./docs
-  #   ports:
-  #     - "8000:8000"
-
 networks:
   data_network:
     driver: bridge
@@ -114,4 +127,5 @@ networks:
 volumes:
   workspace:
   data:
+  # julia-packages:
   # webserver:

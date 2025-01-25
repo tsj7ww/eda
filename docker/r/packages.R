@@ -22,20 +22,21 @@ packages <- c(
   "plotly",         # Interactive plots
   "highcharter",    # Interactive charts
   "viridis",        # Color palettes
-  "GGally",         # Extension to ggplot2
-  "corrplot",       # Correlation plots
-  "ggridges",       # Ridgeline plots
-  "gganimate",      # Animated plots
+  # "GGally",         # Extension to ggplot2
+  # "corrplot",       # Correlation plots
+  # "ggridges",       # Ridgeline plots
+  # "gganimate",      # Animated plots
+  # "bayesplot",      # Visualization for Bayesian models
   
   # Statistical Analysis
   "stats",          # Basic statistics
   "car",            # Companion to Applied Regression
   "lme4",           # Linear mixed-effects models
-  "survival",       # Survival analysis
-  "forecast",       # Time series forecasting
-  "tseries",        # Time series analysis
-  "zoo",            # Time series objects
-  "sandwich",       # Robust covariance matrix estimators
+  # "survival",       # Survival analysis
+  # "forecast",       # Time series forecasting
+  # "tseries",        # Time series analysis
+  # "zoo",            # Time series objects
+  # "sandwich",       # Robust covariance matrix estimators
   
   # Machine Learning
   "caret",          # ML model training and evaluation
@@ -49,46 +50,56 @@ packages <- c(
   "rpart",          # Decision Trees
   "randomForest",   # Random Forests
   
+  # Bayesian Modeling & Stan
+  # "rstan",          # R interface to Stan
+  # "rstanarm",       # Applied Regression Modeling with Stan
+  # "brms",           # Bayesian Regression Models using Stan
+  # "cmdstanr",       # CmdStan interface
+  # "posterior",      # Posterior analysis
+  # "loo",            # Leave-one-out cross-validation
+  # "projpred",       # Projection predictive variable selection
+  # "bayestestR",     # Bayesian analysis utilities
+  
   # Deep Learning
-  "keras",          # Deep Learning interface
-  "tensorflow",     # TensorFlow interface
+  # "keras",          # Deep Learning interface
+  # "tensorflow",     # TensorFlow interface
   
   # Dimensionality Reduction & Clustering
-  "umap",           # Uniform Manifold Approximation
-  "Rtsne",          # t-SNE
-  "factoextra",     # Clustering algorithms & visualization
-  "cluster",        # Clustering algorithms
-  "dbscan",         # Density-based clustering
+  # "umap",           # Uniform Manifold Approximation
+  # "Rtsne",          # t-SNE
+  # "factoextra",     # Clustering algorithms & visualization
+  # "cluster",        # Clustering algorithms
+  # "dbscan",         # Density-based clustering
   
   # Model Interpretation & Evaluation
-  "ROCR",           # ROC curves
-  "PRROC",          # Precision-Recall curves
-  "lime",           # Local Interpretable Model-agnostic Explanations
-  "shapviz",        # SHAP value visualization
-  "vip",            # Variable importance plots
+  # "ROCR",           # ROC curves
+  # "PRROC",          # Precision-Recall curves
+  # "lime",           # Local Interpretable Model-agnostic Explanations
+  # "shapviz",        # SHAP value visualization
+  # "vip",            # Variable importance plots
   
   # Reporting & Reproducibility
-  "rmarkdown",      # Dynamic report generation
-  "knitr",          # Dynamic report generation
-  "shiny",          # Interactive web apps
-  "flexdashboard",  # Interactive dashboards
-  "DT",             # Interactive tables
+  # "rmarkdown",      # Dynamic report generation
+  # "knitr",          # Dynamic report generation
+  # "shiny",          # Interactive web apps
+  # "flexdashboard",  # Interactive dashboards
+  # "DT",             # Interactive tables
   
   # Development Tools
-  "devtools",       # Package development
-  "testthat",       # Unit testing
-  "roxygen2",       # Documentation
-  "profvis",        # Code profiling
+  # "devtools",       # Package development
+  # "testthat",       # Unit testing
+  # "roxygen2",       # Documentation
+  # "profvis",        # Code profiling
   
   # Performance & Parallel Processing
-  "future",         # Parallel processing
-  "furrr",          # Parallel processing with purrr
-  "parallel",       # Parallel processing
-  "doParallel",     # Parallel backend
+  # "future",         # Parallel processing
+  # "furrr",          # Parallel processing with purrr
+  # "parallel",       # Parallel processing
+  # "doParallel",     # Parallel backend
   
   # Database Connections
-  "DBI",            # Database interface
-  "RPostgres",      # PostgreSQL interface
-  "RSQLite",        # SQLite interface
-  "odbc"            # ODBC interface
+  # "DBI",            # Database interface
+  # "RPostgres",      # PostgreSQL interface
+  # "RSQLite",        # SQLite interface
+  # "odbc"            # ODBC interface
 )
