@@ -1,0 +1,45 @@
+# Core PySpark and Jupyter
+pyspark>=3.5.0         # Apache Spark Python API
+jupyter>=1.0.0         # Jupyter notebooks
+jupyterlab>=4.0.0      # Modern Jupyter interface
+ipykernel>=6.29.0      # IPython kernel
+findspark>=2.0.1       # Helper to find Spark installation
+
+# Data Processing
+numpy>=1.24.0          # Numerical computing
+pandas>=2.0.0          # Data manipulation
+pyarrow>=14.0.1        # Apache Arrow (faster Spark-Pandas conversion)
+delta-spark>=3.0.0     # Delta Lake integration
+fsspec>=2023.1.0       # Filesystem interfaces
+s3fs>=2023.1.0         # S3 filesystem support
+
+# Machine Learning
+scikit-learn>=1.2.0    # Machine learning toolkit
+scipy>=1.10.0          # Scientific computing
+hyperopt>=0.2.7        # Hyperparameter optimization
+xgboost>=2.0.0         # Gradient boosting (with Spark support)
+lightgbm>=4.1.0        # Gradient boosting (with Spark support)
+
+# Visualization
+matplotlib>=3.7.0      # Static plotting
+seaborn>=0.12.0        # Statistical visualization
+plotly>=5.13.0         # Interactive plotting
+ipywidgets>=8.0.0      # Interactive widgets
+
+# MLflow Integration
+# mlflow>=2.9.0          # ML lifecycle management
+# mlflow-skinny>=2.9.0   # Lightweight MLflow client
+
+# Development and Testing
+pytest>=7.3.0          # Testing framework
+black>=23.1.0          # Code formatting
+isort>=5.12.0          # Import sorting
+pylint>=3.0.0          # Code linting
+jupyter-lsp>=2.0.0     # Language server
+
+# Performance Monitoring
+jupyterlab-system-monitor>=0.8.0  # System resource monitoring
+memory-profiler>=0.61.0           # Memory profiling
+
+# Optional: Big Data Tools
+# dask>=2023.5.1         # Parallel computing

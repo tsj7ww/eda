@@ -1,5 +1,6 @@
 # Environment variables
 .env
+!env
 .env.local
 
 # Python
@@ -165,11 +166,11 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+# .env
+# env/
+# ENV/
 .venv
-env/
 venv/
-ENV/
 env.bak/
 venv.bak/
 

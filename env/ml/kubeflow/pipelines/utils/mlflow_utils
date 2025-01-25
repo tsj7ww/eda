@@ -1,0 +1,12 @@
+import mlflow
+from typing import Dict, Any
+
+def log_pipeline_start(pipeline_name: str, params: Dict[str, Any]):
+    """Log pipeline start event to MLflow."""
+    mlflow.start_run(run_name=pipeline_name)
+    mlflow.log_params(params)
+
+def log_pipeline_end(metrics: Dict[str, float]):
+    """Log pipeline end event and metrics to MLflow."""
+    mlflow.log_metrics(metrics)
+    mlflow.end_run()

@@ -1,0 +1,27 @@
+pipeline_params:
+  preprocessing:
+    threshold: 0.5
+    remove_outliers: true
+  
+  training:
+    model_type: "random_forest"
+    hyperparameters:
+      n_estimators: 100
+      max_depth: 10
+      random_state: 42
+  
+  evaluation:
+    metrics:
+      - accuracy
+      - precision
+      - recall
+      - f1_score
+    
+  deployment:
+    save_format: "pickle"
+    serving_platform: "mlflow"
+
+mlflow_config:
+  tracking_uri: "http://localhost:5000"
+  experiment_name: "production_pipeline"
+  artifact_location: "/mlflow/artifacts"

@@ -1,4 +1,9 @@
 services:
+
+###################################################
+################### ANALYSIS ######################
+###################################################
+
   python:
     build:
       context: ./docker/python
@@ -14,6 +19,22 @@ services:
       - data_network
     env_file:
       - .env
+
+  # r:
+  #   build:
+  #     context: ./docker/r
+  #     dockerfile: Dockerfile
+  #   container_name: eda-r
+  #   image: eda-r
+  #   ports:
+  #     - "8787:8787"
+  #   volumes:
+  #     - ./workspace:/workspace
+  #     - ./data:/data
+  #   networks:
+  #     - data_network
+  #   env_file:
+  #     - .env
 
   # julia:
   #   build:
@@ -34,14 +55,14 @@ services:
   #   env_file:
   #     - .env
 
-  # r:
+  # spark:
   #   build:
-  #     context: ./docker/r
+  #     context: ./docker/spark
   #     dockerfile: Dockerfile
-  #   container_name: eda-r
-  #   image: eda-r
+  #   container_name: eda-spark
+  #   image: eda-spark
   #   ports:
-  #     - "8787:8787"
+  #     - "8888:8888"
   #   volumes:
   #     - ./workspace:/workspace
   #     - ./data:/data
@@ -49,7 +70,11 @@ services:
   #     - data_network
   #   env_file:
   #     - .env
-  
+
+########################################################
+################### VISUALIZATION ######################
+########################################################
+
   # web:
   #   build:
   #     context: .
@@ -68,20 +93,30 @@ services:
   #     - data_network
   #   env_file:
   #     - .env
-      
-  # mlflow:
-  #   image: ghcr.io/mlflow/mlflow:v2.3.1
+
+  # superset:
+  #   image: apache/superset:latest
+  #   container_name: superset
   #   ports:
-  #     - "5000:5000"
-  #   environment:
-  #     - MLFLOW_BACKEND_STORE_URI=postgresql://mlflow:${POSTGRES_PASSWORD}@postgres/mlflow
-  #     - MLFLOW_ARTIFACTS_DESTINATION=/mlflow/artifacts
+  #     - "8088:8088"
   #   volumes:
-  #     - mlflow_data:/mlflow
+  #     - ./init-superset.sh:/app/init-superset.sh
+  #   environment:
+  #     - SUPERSET_SECRET_KEY=${SUPERSET_SECRET_KEY}
+  #     - SUPERSET_LOAD_EXAMPLES=yes
+  #     - ADMIN_USERNAME=${ADMIN_USERNAME:-admin}
+  #     - ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+  #     - ADMIN_EMAIL=${ADMIN_EMAIL:-admin@superset.com}
+  #     - ADMIN_FIRSTNAME=${ADMIN_FIRSTNAME:-Admin}
+  #     - ADMIN_LASTNAME=${ADMIN_LASTNAME:-User}
   #   depends_on:
   #     - postgres
-  #   networks:
-  #     - data-network
+  #     - redis
+  #   entrypoint: ["/bin/bash", "/env/superset/init.sh"]
+
+###################################################
+################### DATABASE ######################
+###################################################
 
   # postgres:
   #   image: postgres:15-alpine
@@ -116,16 +151,182 @@ services:
   #   networks:
   #     - data-network
 
+##################################################
+################### ML FLOW ######################
+##################################################
+
+  # mlflow:
+  #   build: 
+  #     context: ./mlflow
+  #     dockerfile: Dockerfile
+  #   ports:
+  #     - "5000:5000"
+  #   environment:
+  #     - MLFLOW_TRACKING_URI=http://localhost:5000
+  #     - POSTGRES_DB=mlflow
+  #     - POSTGRES_USER=mlflow
+  #     - POSTGRES_PASSWORD=mlflow
+  #   depends_on:
+  #     - postgres
+  #   volumes:
+  #     - mlflow-artifacts:/mlflow/artifacts
+  #   networks:
+  #     - mlops-network
+
+  # kubeflow-dashboard:
+  #   build:
+  #     context: ./kubeflow
+  #     dockerfile: Dockerfile.dashboard
+  #   ports:
+  #     - "8080:8080"
+  #   environment:
+  #     - POSTGRES_HOST=postgres
+  #     - POSTGRES_DB=kubeflow
+  #     - POSTGRES_USER=kubeflow
+  #     - POSTGRES_PASSWORD=kubeflow
+  #   depends_on:
+  #     - postgres
+  #   networks:
+  #     - mlops-network
+
+  # kubeflow-pipelines:
+  #   build:
+  #     context: ./kubeflow
+  #     dockerfile: Dockerfile.pipelines
+  #   ports:
+  #     - "8888:8888"
+  #   environment:
+  #     - POSTGRES_HOST=postgres
+  #     - POSTGRES_PORT=5432
+  #     - POSTGRES_USER=kubeflow
+  #     - POSTGRES_PASSWORD=kubeflow
+  #     - MINIO_HOST=minio
+  #   depends_on:
+  #     - postgres
+  #     - minio
+  #   networks:
+  #     - mlops-network
+
+##################################################
+################### AIRFLOW ######################
+##################################################
+
+  # airflow-webserver:
+  #   image: apache/airflow:2.7.3
+  #   depends_on:
+  #     - postgres
+  #     - redis
+  #   environment:
+  #     - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+  #     - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+  #     - AIRFLOW__CORE__FERNET_KEY=${FERNET_KEY}
+  #     - AIRFLOW__CORE__LOAD_EXAMPLES=false
+  #     - AIRFLOW__WEBSERVER__SECRET_KEY=${WEBSERVER_SECRET_KEY}
+  #   volumes:
+  #     - ./dags:/opt/airflow/dags
+  #     - ./logs:/opt/airflow/logs
+  #     - ./plugins:/opt/airflow/plugins
+  #     - ./requirements:/opt/airflow/requirements
+  #   ports:
+  #     - "8080:8080"
+  #   command: webserver
+  #   healthcheck:
+  #     test: ["CMD", "curl", "--fail", "http://localhost:8080/health"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+
+  # airflow-scheduler:
+  #   image: apache/airflow:2.7.3
+  #   depends_on:
+  #     - airflow-webserver
+  #   environment:
+  #     - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+  #     - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+  #     - AIRFLOW__CORE__FERNET_KEY=${FERNET_KEY}
+  #     - AIRFLOW__CORE__LOAD_EXAMPLES=false
+  #   volumes:
+  #     - ./dags:/opt/airflow/dags
+  #     - ./logs:/opt/airflow/logs
+  #     - ./plugins:/opt/airflow/plugins
+  #     - ./requirements:/opt/airflow/requirements
+  #   command: scheduler
+
+  # airflow-worker:
+  #   image: apache/airflow:2.7.3
+  #   depends_on:
+  #     - airflow-scheduler
+  #   environment:
+  #     - AIRFLOW__CORE__EXECUTOR=CeleryExecutor
+  #     - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__RESULT_BACKEND=db+postgresql://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CELERY__BROKER_URL=redis://:@redis:6379/0
+  #     - AIRFLOW__CORE__FERNET_KEY=${FERNET_KEY}
+  #   volumes:
+  #     - ./dags:/opt/airflow/dags
+  #     - ./logs:/opt/airflow/logs
+  #     - ./plugins:/opt/airflow/plugins
+  #     - ./requirements:/opt/airflow/requirements
+  #   command: celery worker
+
+  # airflow-init:
+  #   image: apache/airflow:2.7.3
+  #   depends_on:
+  #     - postgres
+  #   environment:
+  #     - AIRFLOW__CORE__SQL_ALCHEMY_CONN=postgresql+psycopg2://airflow:${POSTGRES_PASSWORD:-airflow}@postgres/airflow
+  #     - AIRFLOW__CORE__LOAD_EXAMPLES=false
+  #   volumes:
+  #     - ./dags:/opt/airflow/dags
+  #     - ./logs:/opt/airflow/logs
+  #     - ./plugins:/opt/airflow/plugins
+  #   command: version
+  #   entrypoint: /bin/bash
+  #   command:
+  #     - -c
+  #     - |
+  #       airflow db init && \
+  #       airflow users create \
+  #         --username admin \
+  #         --password admin \
+  #         --firstname Admin \
+  #         --lastname User \
+  #         --role Admin \
+  #         --email admin@example.com
+
+##############################################
+################### LLM ######################
+##############################################
+
+  # llm:
+  #   build: .
+  #   ports:
+  #     - "8888:8888"
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./notebooks:/workspace/notebooks
+  #     - ./models:/workspace/llama.cpp/models
+  #   platform: linux/arm64
+
 networks:
-  data_network:
+  data-network:
     driver: bridge
     # ipam:
     #   driver: default
     #   config:
     #     - subnet: 172.28.0.0/16
+  # mlops-network:
+  #   driver: bridge
 
 volumes:
   workspace:
   data:
-  # julia-packages:
   # webserver:
+  # postgres_data:
+  # redis_data:
+  # minio_data:
+  # julia-packages:
