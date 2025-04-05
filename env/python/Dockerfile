@@ -43,15 +43,32 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     # liblapack-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file
-COPY requirements.txt .
-
-# Install Python packages
-RUN pip install --no-cache-dir -r requirements.txt
+# Install pipenv and virtualenv
+RUN pip install --no-cache-dir pipenv virtualenv
+# Create a virtual environment named 'eda'
+RUN python -m virtualenv /opt/venv/eda
+# Copy Pipfile
+COPY Pipfile .
+##################
+### Cold Start ###
+# Generate Pipfile.lock
+# RUN pipenv lock
+### Warm Start ###
+# Copy Pipfile.lock
+COPY Pipfile.lock .
+##################
+# Generate requirements.txt from Pipfile using pipenv
+RUN pipenv requirements > requirements.txt
+# Install packages in the virtual environment
+RUN . /opt/venv/eda/bin/activate && \
+    pip install --no-cache-dir -r requirements.txt && \
+    pip install --no-cache-dir ipykernel && \
+    python -m ipykernel install --user --name=eda --display-name="EDA"
 
 # Set up bash environment
 COPY bashrc /root/.bashrc
 ENV SHELL=/bin/bash
+ENV PATH="/opt/venv/eda/bin:$PATH"
 
 # Install Kaggle CLI and create alias
 RUN pip install --no-cache-dir kaggle && \

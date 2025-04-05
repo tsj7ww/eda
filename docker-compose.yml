@@ -6,7 +6,7 @@ services:
 
   python:
     build:
-      context: ./docker/python
+      context: ./env/python
       dockerfile: Dockerfile
     container_name: eda-python
     image: eda-python
@@ -16,7 +16,7 @@ services:
       - ./workspace:/workspace
       - ./data:/data
     networks:
-      - data_network
+      - data-network
     env_file:
       - .env
 

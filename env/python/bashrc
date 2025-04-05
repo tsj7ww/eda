@@ -24,7 +24,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias ..='cd ..'
 alias ...='cd ../..'
-alias kg="kaggle
+alias kg="kaggle"
 
 # Add user's private bin if it exists
 if [ -d "$HOME/bin" ] ; then

@@ -1,0 +1,84 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[requires]
+python_version = "3.10"
+
+[packages]
+# Jupyter Environment
+jupyterlab = "*"
+jupyter_client = "*"
+ipywidgets = "*"
+jupyter-dash = "*"
+jupyter-lsp = "*"
+
+# Core Data Science
+numpy = "*"
+pandas = "*"
+scipy = "*"
+statsmodels = "*"
+
+# Machine Learning
+scikit-learn = "*"
+lightgbm = "*"
+xgboost = "*"
+imbalanced-learn = "*"
+category-encoders = "*"
+
+# Visualization
+matplotlib = "*"
+seaborn = "*"
+plotly = "*"
+dash = "*"
+
+# Deep Learning
+tensorflow = "*"
+torch = "*"
+torchvision = "*"
+torchaudio = "*"
+
+# Parallel Computing and Distributed Training
+# dask = {extras = ["complete"], version = "*"}
+# distributed = "*"
+# numba = "*"
+# llvmlite = "*"
+# ray = {extras = ["tune", "serve", "air", "train", "data"], version = "*"}
+# ray = {extras = ["rllib"], version = "*"}
+# modin = "*"
+
+# Model Interpretation and Optimization
+shap = "*"
+optuna = "*"
+
+# # Bayesian Modeling
+# pymc = "*"
+# arviz = "*"
+# # Stan packages (optional)
+# pystan = "*"
+# cmdstanpy = "*"
+# stan = "*"
+
+# Web and API
+fastapi = "*"
+uvicorn = "*"
+python-multipart = "*"
+requests = "*"
+
+# Database
+sqlalchemy = "*"
+psycopg2-binary = "*"
+python-dotenv = "*"
+
+# Image Processing
+# opencv-python-headless = "*"
+# pillow = "*"
+
+[dev-packages]
+# Development and Testing
+pytest = "*"
+black = "*"
+isort = "*"
+flake8 = "*"
+mypy = "*"
