@@ -13,6 +13,7 @@ jupyter_client = "*"
 ipywidgets = "*"
 jupyter-dash = "*"
 jupyter-lsp = "*"
+ipykernel = "*"
 
 # Core Data Science
 numpy = "*"

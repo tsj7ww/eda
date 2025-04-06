@@ -1,5 +1,9 @@
 FROM python:3.10-slim
 
+# Set environment variables
+# ARG JUPYTER_TOKEN
+# ENV JUPYTER_TOKEN=$JUPYTER_TOKEN
+
 WORKDIR /workspace
 
 # Install system dependencies
@@ -51,10 +55,8 @@ RUN python -m virtualenv /opt/venv/eda
 COPY Pipfile .
 ##################
 ### Cold Start ###
-# Generate Pipfile.lock
 # RUN pipenv lock
 ### Warm Start ###
-# Copy Pipfile.lock
 COPY Pipfile.lock .
 ##################
 # Generate requirements.txt from Pipfile using pipenv
@@ -62,7 +64,6 @@ RUN pipenv requirements > requirements.txt
 # Install packages in the virtual environment
 RUN . /opt/venv/eda/bin/activate && \
     pip install --no-cache-dir -r requirements.txt && \
-    pip install --no-cache-dir ipykernel && \
     python -m ipykernel install --user --name=eda --display-name="EDA"
 
 # Set up bash environment
@@ -75,19 +76,18 @@ RUN pip install --no-cache-dir kaggle && \
     mkdir -p /root/.kaggle && \
     chmod 755 /root/.kaggle
 
-# Install CmdStan
+# # Install CmdStan
 # RUN mkdir -p ${STAN_HOME} \
 #     && wget https://github.com/stan-dev/cmdstan/releases/download/v2.32.2/cmdstan-2.32.2.tar.gz \
 #     && tar -xzf cmdstan-2.32.2.tar.gz -C ${STAN_HOME} --strip-components=1 \
 #     && rm cmdstan-2.32.2.tar.gz \
 #     && cd ${STAN_HOME} \
 #     && make build
-
-# Set up CmdStan for PyStan
+# # Set up CmdStan for PyStan
 # RUN python -m cmdstanpy.install_cmdstan
 
 # Expose Jupyter port
 EXPOSE 8888
 
 # Start Jupyter Lab
-CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
+# CMD ["jupyter", "lab", "--ip=0.0.0.0", "--port=8888", "--no-browser", "--allow-root"]
