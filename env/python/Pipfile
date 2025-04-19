@@ -4,7 +4,7 @@ verify_ssl = true
 name = "pypi"
 
 [requires]
-python_version = "3.10"
+python_version = "3.11"
 
 [packages]
 # Jupyter Environment
@@ -41,12 +41,12 @@ torchvision = "*"
 torchaudio = "*"
 
 # Parallel Computing and Distributed Training
-# dask = {extras = ["complete"], version = "*"}
-# distributed = "*"
 # numba = "*"
+# dask = {extras = ["complete"], version = "*"}
+# dask-ml = "*"
+# distributed = "*"
+# ray = {extras = ["default", "serve", "tune", "train", "data"], version = "*"}
 # llvmlite = "*"
-# ray = {extras = ["tune", "serve", "air", "train", "data"], version = "*"}
-# ray = {extras = ["rllib"], version = "*"}
 # modin = "*"
 
 # Model Interpretation and Optimization
