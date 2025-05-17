@@ -31,10 +31,7 @@ flowchart TB
 			- **out3_1**: description
 			- **out3_2**: description
 			- **out3_3**: description"]
-    stage1 -->|"out1_3"| stage3
-    stage1 -->|"out1_2"| stage2
-    stage2 -->|"out2_3"| stage3
-    stage1 -->|"out1_2"| stage3
-    stage2 -->|"out2_2"| stage3
-classDef default fill:#f9f9f9,stroke:#333,stroke-width:1px
+	stage1 -->|"out1_2"| stage2
+	stage1 -->|"out1_2, out1_3"| stage3
+	stage2 -->|"out2_3, out2_2"| stage3
 ```
