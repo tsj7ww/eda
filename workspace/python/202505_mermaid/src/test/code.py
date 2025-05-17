@@ -9,7 +9,7 @@ class Stage1:
 
 
 class Stage2:
-    name = "stage1"
+    name = "stage2"
     description = "abc"
     inputs = ["in2_1", "in2_2", "out1_2"]
     outputs = ["out2_1", "out2_2", "out2_3"]
@@ -19,7 +19,7 @@ class Stage2:
 
 
 class Stage3:
-    name = "stage1"
+    name = "stage3"
     description = "abc"
     inputs = ["out1_2", "out2_3", "out1_3", "out2_2"]
     outputs = ["out3_1", "out3_2", "out3_3"]
